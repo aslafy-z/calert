@@ -26,11 +26,12 @@ jobs:
         run: |
           sed -i "s/^version:/version: \"$XGITHUB_REF_NAME\"/" contrib/helm/calert/Chart.yaml
           sed -i "s/^appVersion:/appVersion: \"$XGITHUB_REF_NAME\"/" contrib/helm/calert/Chart.yaml
+          cat contrib/helm/calert/Chart.yaml
         env:
           XGITHUB_REF_NAME: ${{ github.event.inputs.tag }}
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.4.0
+        uses: helm/chart-releaser-action@v1.4.1
         with:
           charts_dir: contrib/helm
         env:
