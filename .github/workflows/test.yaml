@@ -23,7 +23,7 @@ jobs:
         uses: azure/setup-helm@v3
 
       - name: Bump Chart versions
-        shell: |
+        run: |
           sed -i "s/^version:/version: \"$XGITHUB_REF_NAME\"/" contrib/helm/calert/Chart.yaml
           sed -i "s/^appVersion:/appVersion: \"$XGITHUB_REF_NAME\"/" contrib/helm/calert/Chart.yaml
         env:
