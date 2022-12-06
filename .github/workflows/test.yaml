@@ -22,18 +22,15 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
       - name: Install Helm
         uses: azure/setup-helm@v3
-
-      - name: Bump Chart versions
-        run: |
-          sed -i "s/^version:.*/version: \"$XGITHUB_REF_NAME\"/" contrib/helm/calert/Chart.yaml
-          sed -i "s/^appVersion:.*/appVersion: \"$XGITHUB_REF_NAME\"/" contrib/helm/calert/Chart.yaml
-          cat contrib/helm/calert/Chart.yaml
         env:
-          XGITHUB_REF_NAME: ${{ github.event.inputs.tag || '99.99.99' }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.4.1
+      - name: Publish Helm chart
+        uses: stefanprodan/helm-gh-pages@v1.7.0
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           charts_dir: contrib/helm
-        env:
-          CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          target_dir: charts
+          app_version: ${{ github.event.inputs.tag || '99.99.99' }}
+          chart_version: ${{ github.event.inputs.tag || '99.99.99' }}
