@@ -52,6 +52,11 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v3
 
+      - name: Bump Chart versions
+        shell: |
+          sed -i "s/^version:/version: '$GITHUB_REF_NAME'/" contrib/helm/calert/Chart.yaml
+          sed -i "s/^appVersion:/appVersion: '$GITHUB_REF_NAME'/" contrib/helm/calert/Chart.yaml
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.4.0
         with:
