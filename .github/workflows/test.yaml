@@ -1,0 +1,37 @@
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Target tag version'  
+
+jobs:
+  chart-releaser:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Bump Chart versions
+        shell: |
+          sed -i "s/^version:/version: \"$XGITHUB_REF_NAME\"/" contrib/helm/calert/Chart.yaml
+          sed -i "s/^appVersion:/appVersion: \"$XGITHUB_REF_NAME\"/" contrib/helm/calert/Chart.yaml
+        env:
+          XGITHUB_REF_NAME: ${{ github.event.inputs.tag }}
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.4.0
+        with:
+          charts_dir: contrib/helm
+        env:
+          CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
