@@ -3,6 +3,7 @@ on:
     inputs:
       tag:
         description: 'Target tag version'  
+  push:
 
 jobs:
   chart-releaser:
