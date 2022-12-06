@@ -28,7 +28,7 @@ jobs:
           sed -i "s/^appVersion:.*/appVersion: \"$XGITHUB_REF_NAME\"/" contrib/helm/calert/Chart.yaml
           cat contrib/helm/calert/Chart.yaml
         env:
-          XGITHUB_REF_NAME: ${{ github.event.inputs.tag }}
+          XGITHUB_REF_NAME: ${{ github.event.inputs.tag || '99.99.99' }}
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.4.1
