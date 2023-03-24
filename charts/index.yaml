@@ -3,10 +3,10 @@ entries:
   calert:
   - apiVersion: v2
     appVersion: 99.99.99
-    created: "2022-12-06T13:44:32.832052757Z"
+    created: "2023-03-24T23:56:48.571899257Z"
     description: A Helm chart for the calert which uses Alertmanager webhook receiver
       to receive alerts payload, and pushes this data to Google Chat webhook endpoint.
-    digest: 3737b91522c88bdfdc56fa16ce3266f407290fd0d437ed95d109b2333454b3fb
+    digest: 2e494393fc5f1391da9ff07d7b5f89b1f119f4550aa80ca4cd24d161cb4ba8b3
     home: https://github.com/mr-karan/calert
     keywords:
     - monitoring
@@ -26,4 +26,4 @@ entries:
     urls:
     - https://aslafy-z.github.io/calert/charts/calert-99.99.99.tgz
     version: 99.99.99
-generated: "2022-12-06T13:44:32.831313273Z"
+generated: "2023-03-24T23:56:48.570968984Z"
